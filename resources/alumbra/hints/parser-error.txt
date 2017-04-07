@@ -1,0 +1,6 @@
+This is a parser error, most commonly caused by:
+
+- unbalanced parentheses,
+- missing argument names in directive calls,
+- empty `type`, `interface` or `enum` declarations in GraphQL schemas,
+- empty selection sets in GraphQL queries.
