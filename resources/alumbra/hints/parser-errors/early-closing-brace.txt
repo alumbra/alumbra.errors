@@ -1,0 +1,13 @@
+This means that you closed a block too early and is most commonly caused by an
+empty selection set, e.g.:
+
+    { someField { } }
+
+Alternatively, you might see this error after a linebreak within a
+non-terminated string since GraphQL does not support multi-line strings:
+
+    {
+      someField(someArgument: "a) {
+        someSelection
+      }
+    }

@@ -6,7 +6,8 @@
             :year 2017
             :key "mit"}
   :dependencies [[org.clojure/clojure "1.9.0-alpha14" :scope "provided"]
-                 [alumbra/spec "0.1.6" :scope "provided"]]
+                 [alumbra/spec "0.1.6" :scope "provided"]
+                 [selmer "1.10.7"]]
   :profiles {:dev
              {:dependencies
               [[alumbra/validator "0.1.0"]

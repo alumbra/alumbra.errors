@@ -1,0 +1,6 @@
+This usually means that you have forgotten a closing brace (e.g. '}' or ')') at
+the end of your query, e.g.:
+
+    { someField
+
+Make sure your parentheses are balanced to solve this problem.

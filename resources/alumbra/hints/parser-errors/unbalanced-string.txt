@@ -1,0 +1,11 @@
+This indicates that you forgot a closing quotation mark at the end of a string,
+e.g.:
+
+    { someField(someArgument: "abc) }
+
+Alternatively, you might be misusing an escape sequence within the string, causing
+the quotation mark to be interpreted as part of the string, not a terminator:
+
+    { someField(someArgument: "abc\") }
+
+Make sure your strings are correctly delimited to address this problem.
