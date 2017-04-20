@@ -13,26 +13,57 @@
           (inc (:column location))
           error-message))
 
-(defn- format-parser-error
-  "Format a single parser error, including a snippet describing the location of
-   the error."
+(defn- explain-parser-error
   [{:keys [alumbra/location] :as error} input-string]
-  (->> (vector
-         (parser-error-message error)
-         (context-for location input-string)
-         (hint-for :parser-error error))
-       (filter identity)
-       (string/join "\n\n")))
+  {:locations [location]
+   :message   (parser-error-message error)
+   :hint      (hint-for :parser-error error)
+   :context   (context-for [location] input-string)})
 
-(defn- format-parser-errors
-  "Format a parser error map, including a snippet describing the location of
-   the error for each failure."
-  [parser-errors input-string]
-  (->> parser-errors
-       (map #(format-parser-error % input-string))
-       (string/join "\n\n-----\n\n")))
+;; ## Validation Error
+
+(defn- explain-validation-error
+  [{:keys [alumbra/locations
+           alumbra/validation-error-class]
+    :as error}
+   input-string]
+  {:locations locations
+   :context   (context-for locations input-string)
+   :message   (str "Error of class " validation-error-class)
+   :hint      (hint-for :validation-error error)})
+
+;; ## Format
+
+(defn ^{:added "0.1.0"} format-data
+  "Format the result of [[explain-data]] as a string."
+  [explained-errors]
+  (when (seq explained-errors)
+    (->> (for [{:keys [message hint context]} explained-errors]
+           (->> (vector (str "== " message) context hint)
+                (filter identity)
+                (string/join "\n\n")))
+         (string/join "\n\n"))))
 
 ;; ## Explain
+
+(defn ^{:added "0.1.0"} explain-data
+  "Given the result of a parser/validation operation, as well as the original
+   input as a string, generate a seq of maps describing any occured errors:
+
+   - `:locations`: the error locations,
+   - `:context`:   the part of the `input-string` affected,
+   - `:message`:   an error message,
+   - `:hint`:      an error hint for resolution, describing common causes.
+   "
+  [{:keys [alumbra/parser-errors
+           alumbra/validation-errors]}
+   input-string]
+  (seq
+    (cond parser-errors
+          (map #(explain-parser-error % input-string) parser-errors)
+
+          validation-errors
+          (map #(explain-validation-error % input-string) validation-errors))))
 
 (defn ^{:added "0.1.0"} explain-str
   "Given the result of a parser/validation operation, as well as the original
@@ -40,15 +71,11 @@
 
    - the original error message, including location(s),
    - the part of the code affected, as well as a few lines of context,
-   - a hint on common causes for the given error."
-  [{:keys [alumbra/parser-errors
-           alumbra/validation-errors]}
-   input-string]
-  (cond parser-errors
-        (format-parser-errors parser-errors input-string)
-
-        validation-errors
-        nil))
+   - a hint on common causes for the given error.
+   "
+  [result input-string]
+  (some-> (explain-data result input-string)
+          (format-data)))
 
 (defn ^{:added "0.1.0"} explain
   "Like [[explain-str]] but prints to stdout."

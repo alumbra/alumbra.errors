@@ -2,31 +2,72 @@
   (:require [clojure.java.io :as io]
             [clojure.string :as string]))
 
-(defn- find-line
-  [input-string row]
-  (with-open [in (io/reader (.getBytes input-string "UTF-8"))]
-    (let [[before [line]]  (->> (line-seq in)
-                                (map-indexed #(vector (inc %1) %2))
-                                (split-at row))]
-      {:before (take-last 2 before)
-       :line   line})))
+;; ## Calculate
+
+(def ^:private context-rows-count 3)
+
+(defn- context-prefix
+  [row]
+  (range
+    (max (- row context-rows-count -1) 0)
+    (inc row)))
+
+(defn- calculate-rows-to-show
+  [locations]
+  (->> (map :row locations)
+       (sort)
+       (partition-all 2 1)
+       (mapcat
+         (fn [[a b]]
+           (cond (not b)
+                 (context-prefix a)
+
+                 ;; if there would be <= one row between the two blobs,
+                 ;; merge them.
+                 (<= (- b a 1) context-rows-count)
+                 (concat (context-prefix a) (range a (inc b)))
+
+                 :else
+                 (concat (context-prefix a) (context-prefix b)))))
+       (into #{})))
+
+;; ## Format
 
 (defn- format-line
-  [[line-number line]]
-  (format "%-3s %s" (str line-number "|")  line))
+  [row line]
+  (format "%-3s %s" (str (inc row) "|")  line))
 
-(defn- format-caret
-  [column]
-  (str "    " (apply str (repeat column " ")) "^"))
+(defn- format-carets
+  [locations]
+  (let [deltas (->> locations
+                    (map :column)
+                    (sort)
+                    (cons 0)
+                    (distinct)
+                    (partition 2 1)
+                    (keep
+                      (fn [[a b]]
+                        (if b
+                          (- b a)))))]
+    (reduce
+      (fn [s delta]
+        (str s (format (str "%" (inc delta) "s") "^")))
+      "    "
+      deltas)))
 
 (defn context-for
-  [{:keys [row column]} input-string]
-  (let [{:keys [before line]} (find-line input-string row)]
-    (when (or before line)
-      (->> (concat
-             (map format-line before)
-             (when line
+  [locations input-string]
+  (let [by-row (group-by :row locations)
+        show?  (calculate-rows-to-show locations)]
+    (with-open [in (io/reader (.getBytes input-string "UTF-8"))]
+      (->> (line-seq in)
+           (map vector (range))
+           (mapcat
+             (fn [[index line]]
                (vector
-                 (format-line line)
-                 (format-caret column))))
+                 (if (show? index)
+                   (format-line index line))
+                 (if-let [caret-locations (by-row index)]
+                   (format-carets caret-locations)))))
+           (filter identity)
            (string/join "\n")))))

@@ -36,12 +36,14 @@
 (defn- path-for
   [error-class error]
   (case error-class
-    :parser-error (path-for-parser-error error)
+    :parser-error     (path-for-parser-error error)
     :validation-error (path-for-validation-error error)))
 
 (defn hint-for
   [error-class error]
-  (let [path (path-for error-class error)
-        full-path (str "alumbra/hints/" path)]
-    (string/trim
-      (template/render-file full-path error))))
+  (when-let [path (path-for error-class error)]
+    (let [full-path (str "alumbra/hints/" path)]
+      (when (io/resource full-path)
+        (-> full-path
+            (template/render-file error)
+            (string/trim))))))
