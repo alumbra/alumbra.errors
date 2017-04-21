@@ -1,7 +1,7 @@
 (ns alumbra.errors
   (:require [alumbra.errors
              [context :refer [context-for]]
-             [hints :refer [hint-for]]]
+             [templates :refer [hint-for message-for]]]
             [clojure.string :as string]))
 
 ;; ## Parser Errors
@@ -29,7 +29,7 @@
    input-string]
   {:locations locations
    :context   (context-for locations input-string)
-   :message   (str "Error of class " validation-error-class)
+   :message   (message-for :validation-error error)
    :hint      (hint-for :validation-error error)})
 
 ;; ## Format

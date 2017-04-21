@@ -42,7 +42,7 @@
   (let [deltas (->> locations
                     (map :column)
                     (sort)
-                    (cons 0)
+                    (cons -1)
                     (distinct)
                     (partition 2 1)
                     (keep
@@ -51,7 +51,7 @@
                           (- b a)))))]
     (reduce
       (fn [s delta]
-        (str s (format (str "%" (inc delta) "s") "^")))
+        (str s (format (str "%" delta "s") "^")))
       "    "
       deltas)))
 

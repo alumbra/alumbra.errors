@@ -1,4 +1,4 @@
-(ns alumbra.errors.hints
+(ns alumbra.errors.templates
   (:require [clojure.java.io :as io]
             [clojure.string :as string]
             [selmer.parser :as template]))
@@ -39,11 +39,27 @@
     :parser-error     (path-for-parser-error error)
     :validation-error (path-for-validation-error error)))
 
+(defn- render
+  [template-path error]
+  (when (io/resource template-path)
+    (-> template-path
+        (template/render-file error)
+        (string/trim))))
+
 (defn hint-for
   [error-class error]
   (when-let [path (path-for error-class error)]
-    (let [full-path (str "alumbra/hints/" path)]
-      (when (io/resource full-path)
-        (-> full-path
-            (template/render-file error)
-            (string/trim))))))
+    (-> (str "alumbra/errors/hints/" path)
+        (render error))))
+
+(defn- default-message-path-for
+  [error-class]
+  (case error-class
+    :validation-error "validation-errors/default.txt"))
+
+(defn message-for
+  [error-class error]
+  (->> [(path-for error-class error)
+        (default-message-path-for error-class)]
+       (map #(str "alumbra/errors/messages/" %))
+       (some #(render % error))))
