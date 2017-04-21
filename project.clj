@@ -10,12 +10,12 @@
                  [selmer "1.10.7"]]
   :profiles {:dev
              {:dependencies
-              [[alumbra/validator "0.1.0"]
-               [alumbra/parser "0.1.5"]
-               [alumbra/analyzer "0.1.8"]]}
+              [[alumbra/validator "0.2.0"]
+               [alumbra/parser "0.1.6"]
+               [alumbra/analyzer "0.1.10"]]}
              :codox
              {:plugins [[lein-codox "0.10.3"]]
-              :dependencies [[codox-theme-rdash "0.1.1"]]
+              :dependencies [[codox-theme-rdash "0.1.2"]]
               :codox {:project {:name "alumbra.errors"}
                       :metadata {:doc/format :markdown}
                       :themes [:rdash]
