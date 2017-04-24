@@ -1,0 +1,10 @@
+{% if alumbra/argument-name %}
+Argument "{{ alumbra/argument-name }}" of type
+"{{ alumbra/type-description|alumbra/graphql-type }}"
+has invalid value {{ alumbra/value|alumbra/graphql-value }}.
+{% else %}
+Expected value of type
+"{{ alumbra/type-description|alumbra/graphql-type }}",
+found
+{{ alumbra/value|alumbra/graphql-value }}.
+{% endif %}

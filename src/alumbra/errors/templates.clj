@@ -32,6 +32,7 @@
                       (str field-name ":" (format-value value))))
                   (string/join ", ")
                   (format "{%s}"))
+    :variable (str "$" (:alumbra/variable-name value))
     :null    "null"
     (pr-str value)))
 

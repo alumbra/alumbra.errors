@@ -1,0 +1,3 @@
+Input object of type "{{ alumbra/input-type-name }}" is missing required
+field{{ alumbra/required-input-field-names|pluralize }}
+{% for x in alumbra/required-input-field-names|sort %}"{{ x }}"{% if not forloop.last %}, {% endif %}{% endfor %}.
