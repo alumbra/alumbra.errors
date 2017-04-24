@@ -1,0 +1,6 @@
+{% if alumbra/fragment-name %}
+Unknown type "{{ alumbra/fragment-type-name }}" for fragment
+"{{ alumbra/fragment-name }}".
+{% else %}
+Unknown type "{{ alumbra/fragment-type-name }}" for inline fragment spread.
+{% endif %}

@@ -1,0 +1,6 @@
+Fragments {{ alumbra/cycle-fragment-names|sort|join:", " }} contain one or more cycles.
+
+A cycle in fragments would create an infinite result once the fragment is used.
+In this case the following edges form one or more cycles:
+{% for data in alumbra/cycle-fragment-edges %}
+    {{ data.0 }} -> {{ data.1|join:", " }}{% endfor %}
