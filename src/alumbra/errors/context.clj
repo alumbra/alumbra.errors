@@ -57,17 +57,18 @@
 
 (defn context-for
   [locations input-string]
-  (let [by-row (group-by :row locations)
-        show?  (calculate-rows-to-show locations)]
-    (with-open [in (io/reader (.getBytes input-string "UTF-8"))]
-      (->> (line-seq in)
-           (map vector (range))
-           (mapcat
-             (fn [[index line]]
-               (vector
-                 (if (show? index)
-                   (format-line index line))
-                 (if-let [caret-locations (by-row index)]
-                   (format-carets caret-locations)))))
-           (filter identity)
-           (string/join "\n")))))
+  (when (seq locations)
+    (let [by-row (group-by :row locations)
+          show?  (calculate-rows-to-show locations)]
+      (with-open [in (io/reader (.getBytes input-string "UTF-8"))]
+        (->> (line-seq in)
+             (map vector (range))
+             (mapcat
+               (fn [[index line]]
+                 (vector
+                   (if (show? index)
+                     (format-line index line))
+                   (if-let [caret-locations (by-row index)]
+                     (format-carets caret-locations)))))
+             (filter identity)
+             (string/join "\n"))))))
