@@ -1,7 +1,7 @@
 (ns alumbra.errors
   (:require [alumbra.errors
              [context :refer [context-for]]
-             [templates :refer [hint-for message-for]]]
+             [templates :as templates]]
             [clojure.string :as string]))
 
 ;; ## Parser Errors
@@ -15,10 +15,12 @@
 
 (defn- explain-parser-error
   [{:keys [alumbra/location] :as error} input-string]
-  {:locations [location]
-   :message   (parser-error-message error)
-   :hint      (hint-for :parser-error error)
-   :context   (context-for [location] input-string)})
+  (merge
+    (templates/render-for
+      :parser-error
+      (assoc error :raw-message (parser-error-message error)))
+    {:locations [location]
+     :context   (context-for [location] input-string)}))
 
 ;; ## Validation Error
 
@@ -27,10 +29,10 @@
            alumbra/validation-error-class]
     :as error}
    input-string]
-  {:locations locations
-   :context   (context-for locations input-string)
-   :message   (message-for :validation-error error)
-   :hint      (hint-for :validation-error error)})
+  (merge
+    (templates/render-for :validation-error error)
+    {:locations locations
+     :context   (context-for locations input-string) }))
 
 ;; ## Format
 

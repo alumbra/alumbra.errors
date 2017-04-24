@@ -1,1 +1,0 @@
-Field "{{ alumbra/field-name }}" of type "{{ alumbra/containing-type-name }}" must have a selection of subfields.

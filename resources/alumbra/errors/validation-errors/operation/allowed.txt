@@ -1,3 +1,5 @@
+There is no schema root for operation type "{{ alumbra/operation-type }}".
+
 The GraphQL schema needs to contain a "schema" section describing which root
 types correspond to which operation types, e.g.:
 

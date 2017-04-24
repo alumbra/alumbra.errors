@@ -1,3 +1,5 @@
+{{ raw-message }}
+
 This means that you have an extraneous closing brace, e.g.:
 
     { someField } }

@@ -1,3 +1,6 @@
+Field "{{ alumbra/field-name }}" of type "{{ alumbra/containing-type-name }}"
+must have a selection of subfields.
+
 Fields that provide OBJECT, INTERFACE or UNION types cannot be queried as
 leaves. Instead, you have to provide a selection set querying the desired
 information. Try the following:
