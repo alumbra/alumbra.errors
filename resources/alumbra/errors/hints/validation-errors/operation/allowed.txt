@@ -1,0 +1,9 @@
+The GraphQL schema needs to contain a "schema" section describing which root
+types correspond to which operation types, e.g.:
+
+    schema {
+      query: QueryRoot
+      mutation: MutationRoot
+    }
+
+It seems there is no such declaration for "{{ alumbra/operation-type }}".

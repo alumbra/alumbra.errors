@@ -1,0 +1,2 @@
+A GraphQL document can contain multiple operations. Only if there is exactly
+one are you allowed to omit the operation name.
