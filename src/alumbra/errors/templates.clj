@@ -35,8 +35,8 @@
     :null    "null"
     (pr-str value)))
 
-(filters/add-filter! :graphql-type  #'format-type-description)
-(filters/add-filter! :graphql-value #'format-value)
+(filters/add-filter! :alumbra/graphql-type  #'format-type-description)
+(filters/add-filter! :alumbra/graphql-value #'format-value)
 
 ;; ## Parser Errors
 
