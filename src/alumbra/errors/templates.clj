@@ -2,7 +2,41 @@
   (:require [clojure.java.io :as io]
             [clojure.string :as string]
             [selmer.util :refer [without-escaping]]
-            [selmer.parser :as template]))
+            [selmer.parser :as template]
+            [selmer.filters :as filters]))
+
+;; ## Formatters
+
+(defn- format-type-description
+  [{:keys [type-description type-name non-null?]}]
+  (cond-> (if type-description
+            (format "[%s]" (format-type-description type-description))
+            type-name)
+    non-null? (str "!")))
+
+(defn- format-value
+  [{:keys [alumbra/value-type] :as value}]
+  (case value-type
+    :string  (pr-str (:alumbra/string value))
+    :integer (:alumbra/integer value)
+    :float   (:alumbra/float value)
+    :boolean (:alumbra/boolean value)
+    :enum    (:alumbra/enum value)
+    :list    (->> (:alumbra/list value)
+                  (map format-value)
+                  (string/join ", ")
+                  (format "[%s]"))
+    :object  (->> (:alumbra/object value)
+                  (map
+                    (fn [{:keys [alumbra/field-name alumbra/value]}]
+                      (str field-name ":" (format-value value))))
+                  (string/join ", ")
+                  (format "{%s}"))
+    :null    "null"
+    (pr-str value)))
+
+(filters/add-filter! :graphql-type  #'format-type-description)
+(filters/add-filter! :graphql-value #'format-value)
 
 ;; ## Parser Errors
 
@@ -47,9 +81,10 @@
                    (template/render-file template-path error))
           [message hint] (string/split result #"\n\n" 2)]
       {:message (-> message
-                    (string/replace #"\n" "")
+                    (string/replace #"\n" " ")
                     (string/trim))
-       :hint    (some-> hint string/trim)})))
+       :hint    (if  (some-> hint string/blank? not)
+                  (string/trim hint))})))
 
 (defn- default-path-for
   [error-class]

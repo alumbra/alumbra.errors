@@ -1,1 +1,1 @@
-Variable "{{ alumbra/variable-name }}" is not defined by any operation using fragment "{{ alumbra/fragment-name }}".
+Variable "${{ alumbra/variable-name }}" is not defined by any operation using fragment "{{ alumbra/fragment-name }}".

@@ -1,0 +1,17 @@
+Variable "${{ alumbra/variable-name }}" has type
+"{{ alumbra/type-description|graphql-type }}" which is not an input type.
+
+This usually means that you're trying to use an OBJECT type for a variable,
+where only INPUT types are allowed.
+
+    type {{ alumbra/variable-type-name }} { ... }
+
+Change your declaration to the following to solve this problem:
+
+    input {{ alumbra/variable-type-name }} { ... }
+
+If you need the type for both input and output values, consider creating
+an INPUT type alongside, commonly suffixed with "Input":
+
+    type {{ alumbra/variable-type-name }} { ... }
+    input {{ alumbra/variable-type-name }}Input { ... }

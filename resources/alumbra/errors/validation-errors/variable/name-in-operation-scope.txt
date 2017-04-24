@@ -1,5 +1,5 @@
 {% if alumbra/operation-name %}
-Variable "{{ alumbra/variable-name }}" not defined by operation "{{ alumbra/operation-name }}".
+Variable "${{ alumbra/variable-name }}" not defined by operation "{{ alumbra/operation-name }}".
 {% else %}
-Variable "{{ alumbra/variable-name }}" is not defined.
+Variable "${{ alumbra/variable-name }}" is not defined.
 {% endif %}
