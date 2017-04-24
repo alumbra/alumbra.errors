@@ -42,9 +42,11 @@
 (defn- render
   [template-path error]
   (when (io/resource template-path)
-    (-> template-path
-        (template/render-file error)
-        (string/trim))))
+    (let [result (-> template-path
+                     (template/render-file error)
+                     (string/trim))]
+      (assert (not (empty? result)))
+      result)))
 
 (defn hint-for
   [error-class error]
