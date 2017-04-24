@@ -1,0 +1,5 @@
+{% if alumbra/operation-name %}
+Variable "{{ alumbra/variable-name }}" is never used in operation "{{ alumbra/operation-name }}".
+{% else %}
+Variable "{{ alumbra/variable-name }}" is never used.
+{% endif %}
