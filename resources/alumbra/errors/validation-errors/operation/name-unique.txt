@@ -1,4 +1,4 @@
 There can only be one operation named "{{ alumbra/operation-name }}".
-
+----
 Since the operation name is used to decide which operation to execute, there may
 not be any conflicts.

@@ -1,7 +1,7 @@
 {% if alumbra/fragment-name %}
-Type "{{ alumbra/fragment-type-name }}" for fragment
-"{{ alumbra/fragment-name }}" is not a composite type.
+Type "{{ alumbra/fragment-type-name }}" for fragment "{{ alumbra/fragment-name }}"
 {% else %}
 Type "{{ alumbra/fragment-type-name }}" for inline fragment spread
-is not a composite type.
 {% endif %}
+is not a composite type.
+----

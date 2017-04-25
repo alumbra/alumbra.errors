@@ -1,1 +1,7 @@
-Unknown argument "{{ alumbra/argument-name }}" on field "{{ alumbra/field-name }}" of type "{{ alumbra/containing-type-name }}".
+Unknown argument "{{ alumbra/argument-name }}" on
+{% if alumbra/directive-name %}
+directive "@{{ alumbra/directive-name }}".
+{% else %}
+field "{{ alumbra/field-name }}" of type "{{ alumbra/containing-type-name }}".
+{% endif %}
+----

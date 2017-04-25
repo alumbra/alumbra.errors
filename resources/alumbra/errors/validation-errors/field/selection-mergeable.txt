@@ -1,4 +1,4 @@
 Selection "{{ alumbra/field-name }}" conflicts with another field of the same
 name.
-
+----
 Use different aliases on the fields to fetch both if this was intentional.

@@ -1,1 +1,2 @@
 Validation Error: {{ alumbra/validation-error-class }}
+----

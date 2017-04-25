@@ -1,1 +1,2 @@
 There can only be one fragment named "{{ alumbra/fragment-name }}".
+----

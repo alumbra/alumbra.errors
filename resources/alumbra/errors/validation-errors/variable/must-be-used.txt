@@ -3,3 +3,4 @@ Variable "${{ alumbra/variable-name }}" is never used in operation "{{ alumbra/o
 {% else %}
 Variable "${{ alumbra/variable-name }}" is never used.
 {% endif %}
+----

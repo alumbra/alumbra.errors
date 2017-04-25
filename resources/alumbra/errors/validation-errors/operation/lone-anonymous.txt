@@ -1,4 +1,4 @@
 This anonymous operation must be the only defined operation.
-
+----
 A GraphQL document can contain multiple operations. Only if there is exactly
 one are you allowed to omit the operation name.

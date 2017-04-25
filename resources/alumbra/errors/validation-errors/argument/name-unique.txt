@@ -1,1 +1,2 @@
 There can only be one argument named "{{ alumbra/argument-name }}".
+----

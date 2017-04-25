@@ -1,5 +1,5 @@
 {{ raw-message }}
-
+----
 This usually means that you have forgotten a closing brace (e.g. '}' or ')') at
 the end of your query, e.g.:
 

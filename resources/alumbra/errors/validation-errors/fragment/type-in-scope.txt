@@ -1,2 +1,3 @@
 Fragment cannot be spread here as objects of type "{{ alumbra/containing-type-name }}"
 can never be of type "{{ alumbra/fragment-type-name }}".
+----

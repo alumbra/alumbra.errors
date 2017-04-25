@@ -1,5 +1,5 @@
 {{ raw-message }}
-
+----
 This means that you closed a block too early and is most commonly caused by an
 empty selection set, e.g.:
 

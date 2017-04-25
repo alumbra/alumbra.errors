@@ -1,3 +1,4 @@
 Variable "${{ alumbra/variable-name }}" of type
 "{{ alumbra/type-description|alumbra/graphql-type }}" has invalid default value
 {{ alumbra/type-description.default-value|alumbra/graphql-value }}.
+----

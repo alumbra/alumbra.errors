@@ -1,0 +1,3 @@
+The directive "@{{ alumbra/directive-name }}" can only be used once at this
+location.
+----

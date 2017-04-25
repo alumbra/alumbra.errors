@@ -8,3 +8,4 @@ Expected value of type
 found
 {{ alumbra/value|alumbra/graphql-value }}.
 {% endif %}
+----

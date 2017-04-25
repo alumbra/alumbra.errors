@@ -1,6 +1,6 @@
 Variable "${{ alumbra/variable-name }}" has type
 "{{ alumbra/type-description|alumbra/graphql-type }}" which is not an input type.
-
+----
 This usually means that you're trying to use an OBJECT type for a variable,
 where only INPUT types are allowed.
 

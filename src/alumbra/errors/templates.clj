@@ -80,9 +80,9 @@
   (when (io/resource template-path)
     (let [result (without-escaping
                    (template/render-file template-path error))
-          [message hint] (string/split result #"\n\n" 2)]
+          [message hint] (string/split result #"\n----\n" 2)]
       {:message (-> message
-                    (string/replace #"\n" " ")
+                    (string/replace #"\n+" " ")
                     (string/trim))
        :hint    (if  (some-> hint string/blank? not)
                   (string/trim hint))})))

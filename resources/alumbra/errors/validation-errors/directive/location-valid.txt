@@ -1,0 +1,4 @@
+Directive "@{{ alumbra/directive-name }}" cannot be used in this location.
+----
+When declaring a directive a set of possible locations is specified. And
+apparently, "@{{ alumbra/directive-name }}" is not allowed to be used here.
