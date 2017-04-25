@@ -1,6 +1,6 @@
 (defproject alumbra/errors "0.1.0-SNAPSHOT"
   :description "Human-readable Errors for Alumbra."
-  :url "https://github.com/alumbra/alumbra.ring"
+  :url "https://github.com/alumbra/alumbra.errors"
   :license {:name "MIT License"
             :url "https://opensource.org/licenses/MIT"
             :year 2017
