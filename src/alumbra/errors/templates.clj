@@ -77,6 +77,8 @@
 
 (defn- render
   [template-path error]
+  {:post [(or (nil? %)
+              (not (string/blank? (:message %))))]}
   (when (io/resource template-path)
     (let [result (without-escaping
                    (template/render-file template-path error))

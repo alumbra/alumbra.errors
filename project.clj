@@ -10,9 +10,7 @@
                  [selmer "1.10.7"]]
   :profiles {:dev
              {:dependencies
-              [[alumbra/validator "0.2.1"]
-               [alumbra/parser "0.1.6"]
-               [alumbra/analyzer "0.1.10"]]}
+              [[org.clojure/test.check "0.9.0"]]}
              :codox
              {:plugins [[lein-codox "0.10.3"]]
               :dependencies [[codox-theme-rdash "0.1.2"]]
