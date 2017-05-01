@@ -11,7 +11,34 @@ validation errors as described in [alumbra.spec][alumbra-spec].
 
 ## Usage
 
-TODO
+```clojure
+(require '[alumbra.errors :as errors])
+```
+
+An erroneous parser or validator result can be passed to `explain-data` to get
+a unified result:
+
+```clojure
+(errors/explain-data
+  (validator
+    (parse/parse-document "{ me { unknownField } }")))
+;; => [{:locations [{:row 0, :column 7, :index 7}]
+;;      :context   "1|  { me { unknownField } }\n           ^"
+;;      :message   "Syntax Error ..."
+;;      :hint      "..."}]
+```
+
+The available keys are:
+
+- `:locations`: a seq of error locations,
+- `:context`: a formatted piece of the input query with an indicator as to where
+  the error occured,
+- `:message`: the parser/validation error message,
+- `:hint`: if available, a small piece of text describing common causes and
+  solutions for this class of error.
+
+Additionally, there is `explain-str` and `explain`, formatting errors as a
+string and printing it, respectively.
 
 ## License
 
