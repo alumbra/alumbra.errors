@@ -1,4 +1,4 @@
-(defproject alumbra/errors "0.1.0-SNAPSHOT"
+(defproject alumbra/errors "0.1.0"
   :description "Human-readable Errors for Alumbra."
   :url "https://github.com/alumbra/alumbra.errors"
   :license {:name "MIT License"
