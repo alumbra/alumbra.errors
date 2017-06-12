@@ -19,9 +19,10 @@ An erroneous parser or validator result can be passed to `explain-data` to get
 a unified result:
 
 ```clojure
-(errors/explain-data
-  (validator
-    (parse/parse-document "{ me { unknownField } }")))
+(let [query-string "{ me { unknownField } }"]
+  (-> (parser/parse-document query-string)
+      (validator)
+      (errors/explain-data query-string)))
 ;; => [{:locations [{:row 0, :column 7, :index 7}]
 ;;      :context   "1|  { me { unknownField } }\n           ^"
 ;;      :message   "Syntax Error ..."
