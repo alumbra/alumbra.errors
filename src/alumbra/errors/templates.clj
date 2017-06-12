@@ -81,7 +81,10 @@
               (not (string/blank? (:message %))))]}
   (when (io/resource template-path)
     (let [result (without-escaping
-                   (template/render-file template-path error))
+                   (template/render-file
+                     template-path
+                     error
+                     {:custom-resource-path nil}))
           [message hint] (string/split result #"\n----\n" 2)]
       {:message (-> message
                     (string/replace #"\n+" " ")
